@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: cloudnativebasicspring-replicationcontroller
+spec:
+  replicas: 3
+  selector:
+    app: cloudnativebasicspring
+  template:
+    metadata:
+      name: cloudnativebasicspring
+      labels:
+        app: cloudnativebasicspring
+    spec:
+      containers:
+      - name: cloudnativebasicspring
+        image: fharris/cloudnativebasic-spring-docker:latest
+        ports:
+        - containerPort: 8080

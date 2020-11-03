@@ -1,7 +1,9 @@
 # k8cloudbooster
-Simple Exercises to Learn Kubernetes Basics
+Simple Exercises to Learn Kubernetes Very Very Basics
 
 
-## 1st Exercise: Create a Namespace and a Context to play around
+
+
+
 
 

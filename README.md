@@ -163,9 +163,66 @@ spec:
     app: cloudnativebasicspring
 ```
 
+As you can see, its type is LoadBalancer. It could be a a NodePort or a ClusterIP, etc.
+The fact that I’m using a LoadBalancer type means that it will be attached to the Load Balancer specific definition of my Cloud provider. In this case Oracle Cloud.
+I will expose the port 8080 of my loadbalancer and map it to the port 8080 of my target container which is in our case the app cloudnativebasicspring. 
+
+So, when we run:
+```
+kubectl apply -f manifestService.yml 
+```
+And immediately after run:
+```
+kubectl get services
+```
+We can see that the Service is already created, but not ready as the External IP is still in pending state.
+We the external IP is assigned, we can finally get access to our app through our service:
+
+If we open a browser with the http://EXTERNAL-IP:8080
+
+We should be able to see our app running.
+
 - 5. # Check Logs
 
+Another cool thing we can do with kubectl is to check the logs from the running pod.
+
+So, if we run:
+
+kubectl logs podname 
+
+which in our case would be something such as: 
+```
+kubectl logs cloudnativebasicspring-deployment-78cb5675c6-zmc5w
+```
+We can observe our spring app logs.
+
+
 - 6. # Scalling the App
+
+When we talked about Deployments, we mentioned that a Deployment knows how to create a Replica Set which will guarantee that there is always a minimum number of replicas of that pod running in the cluster. In our case, we’ve defined 3 replicas.
+
+Let’s imagine that one of our pods has an issue and gets deleted or unstable. To simulate that we are going to delete a pod:
+
+Before let’s list all the pods again:
+```
+kubectl get pods -o wide
+```
+And we can actually see that we have 3 pods distributed across different nodes. If you notice, the IPs are different!
+Let’s now delete one of the pods and see what happens:
+```
+kubectl delete pod cloudnativebasicspring-deployment-78cb5675c6-zmc5w
+```
+We can see that immediately a new pod is provisioned:
+
+The number of running replicas is guaranteed by Kubernetes.
+
+We can also explicitly scale up and scale down to increase or decrease the number of running replicas.
+In our Deployment manifest we can change the number from 3 to 10 for example and apply the change declaratively.
+
+But lets do it imperatively:
+```
+kubectl scale deploy cloudnativebasicspring-deployment --replicas=5
+```
 
 - 7. # Housekeeping
 

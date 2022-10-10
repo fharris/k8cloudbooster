@@ -1,4 +1,4 @@
-# k8cloudbooster
+## k8cloudbooster
 Simple Exercises to Learn Kubernetes Very Very Basics
 
 #Start the exercices here:
@@ -6,7 +6,7 @@ Simple Exercises to Learn Kubernetes Very Very Basics
 https://fharris.github.io/k8cloudbooster/
 
 
-4.1.	Exercise Namespaces
+# 4.1.	Exercise Namespaces
 
 Edit file namespace-dev.json in order to configure your own namespace:
 

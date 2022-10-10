@@ -14,20 +14,40 @@ The aim of this document is to walk you through the basics of Kubernetes in Orac
 - [k8s architecture diagram](./pics/k8sarchi.png)
 
 
+- 2. # Create a Namespace
+
+We can simply create imperatively a namespace with something like:
+```
+kubectl create ns k8-booster
+```
+But lets try to do it declaratively:
+
+Edit file [namespace-dev.json](./namespace-dev.json)  to configure your own namespace:
+```
+{"kind": "Namespace",
+ "apiVersion": "v1",
+ "metadata": {
+        "name": "k8-booster",
+        "labels": {
+        "name": "k8-booster"
+}
+}
+}
+```
+In this case, I’ve called my namespace “k8-booster”.
 
 
-- 2. # Create a Cluster
+After editing the file we are ready to create our namespace:
+```
+kubectl create -f namespace-dev.json
+```
+We can double check the namespace was created in the cluster:
+```
+kubectl get namespaces 
+```
 
-
-
-- 3. # Access Cluster
-
-
-
-
-- 4. # Create a Namespace
-- 5. # Create a Deployment
-- 6. # Create a Service
+- 3. # Create a Deployment
+- 4. # Create a Service
 
 If you remember. We can’t actually call a pod directly. Not only the Kubernetes definition and best practices try to avoid that, as we also implemented an extra layer of security and privacy when we decided to provision this cluster in OCI with private node workers. They don’t even have a public IP. 
 
@@ -49,4 +69,18 @@ spec:
     app: cloudnativebasicspring
 ```
 
+- 5. # Check Logs
 
+- 6. # Scalling the App
+
+- 7. # Housekeeping
+
+Before we close this tutorial let’s make some housekeeping and delete all the resources we created. This is specially important because resources such as the Load Balancer might cost you money depending on the cloud provider where you are running it:
+
+```
+kubectl -n k8-booster delete deployment,pod,svc --all    
+```
+or 
+```
+kubectl delete namespace k8-booster-demo-01 --force --grace-period=0 
+```

@@ -1,150 +1,52 @@
-## k8cloudbooster
-Simple Exercises to Learn Kubernetes Very Very Basics
+## Kubernetes cloud booster for begginers with Oracle Container Engine and Oracle Cloud Infrastructure
 
-#Start the exercices here:
+- 1. # Introduction
 
-https://fharris.github.io/k8cloudbooster/
+The aim of this document is to walk you through the basics of Kubernetes in Oracle Cloud with Oracle Container Engine, a self-managed Kubernetes as a service.  
 
+## See the following resources:
 
-4.1.	Exercise Namespaces
+- [Lab Instructions](./README.md)
+- [k8s manifest for namespace](./pics/structure.png)
+- [k8s manifest for deployment](./manifestDeployment.yml)
+- [k8s manifest for service](./installation.md)
 
-Edit file namespace-dev.json in order to configure your own namespace:
+- [k8s architecture diagram](./pics/k8sarchi.png)
 
- 
 
-In this case, I’ve called my namespace “k8-booster”.
 
 
-Now we are ready to create our namespace
+- 2. # Create a Cluster
 
-kubectl create -f namespace-dev.json
 
- 
 
-We can double check the namespace was created in the cluster:
+- 3. # Access Cluster
 
-kubectl get namespaces 
-	
- 
 
-Let’s set a context named k8-booster in our cluster:
 
 
-First, you need to get some info about your cluster. Best place to that is in your kubeconfig file, which should be in the .kube hidden folder:
+- 4. # Create a Namespace
+- 5. # Create a Deployment
+- 6. # Create a Service
 
-cat .kube/config | grep -in context
+If you remember. We can’t actually call a pod directly. Not only the Kubernetes definition and best practices try to avoid that, as we also implemented an extra layer of security and privacy when we decided to provision this cluster in OCI with private node workers. They don’t even have a public IP. 
 
-Take note of the user and cluster :
+In order to manage external access, we need a construct known as Service. There are different types of services. 
 
- 
-
-Also with:
-kubectl config get-contexts
-
- 
-
-You’ll use that now to build the following command:
-
-kubectl config set-context context-cqe7y7j3nwq --namespace=k8-booster-demo-01
-
- 
-
-And now confirm it changed:
-kubectl config get-contexts
-
- 
-
-
-I can also create a new context for it instead of using the current:
-kubectl config set-context k8-booster --namespace=k8-booster --cluster=cluster-c2genzygrtg --user=user-c2genzygrtg
-
-Which will create a context called k8-booster associated to the namespace k8-booster.
-
- 
-
-
-And if I create a new context I will need to switch to it…. the local context of our kubeconfig to the context we just created:
-
-kubectl config use-context k8-booster
-
- 
-
-
-Finally lets double check we’re working in the context:
-
-kubectl config current-context
-
- 
-
-
-Let’s start exploring some other basic Kubernetes concepts:
-![image](https://user-images.githubusercontent.com/17484224/194843406-41c338bc-1bab-4f5a-9c8c-191794b5b083.png)
-
-
-
-
-# 4.1.	Exercise Namespaces
-
-Edit file namespace-dev.json in order to configure your own namespace:
-
- 
-
-In this case, I’ve called my namespace “k8-booster”.
-
-
-Now we are ready to create our namespace
-
-kubectl create -f namespace-dev.json
-
- 
-
-We can double check the namespace was created in the cluster:
-
-kubectl get namespaces 
-	
- 
-
-Let’s set a context named k8-booster in our cluster:
-
-
-First, you need to get some info about your cluster. Best place to that is in your kubeconfig file, which should be in the .kube hidden folder:
-
-cat .kube/config
-
-Take note of the user and cluster :
-
- 
-
-You’ll use that now to build the following command:
-
-kubectl config set-context k8-booster --namespace=k8-booster --cluster=cluster-c2genzygrtg --user=user-c2genzygrtg
-
-Which will create a context called k8-booster associated to the namespace k8-booster.
-
- 
-
-
-Now, let’s switch the local context of our kubeconfig to the context we just created:
-
-kubectl config use-context k8-booster
-
- 
-
-
-Finally lets double check we’re working in the context:
-
-kubectl config current-context
-
- 
-
-
-Let’s start exploring some other basic Kubernetes concepts:
-![image](https://user-images.githubusercontent.com/17484224/194840558-9b8ca6b4-7a0f-4658-bb49-8d1e2f3ea33c.png)
-
-
-
-
-
-
+Let’s take a look on our service declaration opening file manifestService.yml:
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudnativebasicspring-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: cloudnativebasicspring
+```
 
 

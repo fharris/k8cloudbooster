@@ -153,6 +153,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cloudnativebasicspring-service
+  annotations:
+    oci.oraclecloud.com/load-balancer-type: "nlb"
 spec:
   type: LoadBalancer
   ports:

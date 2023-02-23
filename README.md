@@ -9,7 +9,7 @@ The aim of this document is to walk you through the basics of Kubernetes in Orac
 - [Lab Instructions](./README.md)
 - [k8s manifest for namespace](./pics/structure.png)
 - [k8s manifest for deployment](./manifestDeployment.yml)
-- [k8s manifest for service](./installation.md)
+- [k8s manifest for service](./manifestDeployment.yml)
 
 - [k8s architecture diagram](./pics/k8sarchi.png)
 

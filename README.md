@@ -165,6 +165,23 @@ spec:
     app: cloudnativebasicspring
 ```
 
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudnativebasicspring-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: cloudnativebasicspring
+  ports:
+      # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+    - port: 8080
+      targetPort: 8080
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+```
+
 As you can see, its type is LoadBalancer. It could be a a NodePort or a ClusterIP, etc.
 The fact that I’m using a LoadBalancer type means that it will be attached to the Load Balancer specific definition of my Cloud provider. In this case Oracle Cloud.
 I will expose the port 8080 of my loadbalancer and map it to the port 8080 of my target container which is in our case the app cloudnativebasicspring. 

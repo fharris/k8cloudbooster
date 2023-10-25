@@ -78,6 +78,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudnativebasicspring-deployment
+  namespace: k8-booster
 spec:
   selector:
     matchLabels:
